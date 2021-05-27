@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "17532579542",
+    "project_id": "fir-tast-89282",
+    "storage_bucket": "fir-tast-89282.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:17532579542:android:faee2fee37896622f92377",
+        "android_client_info": {
+          "package_name": "com.test.firebasetast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "17532579542-2ta913rnavip80bd642ps5ig2j64v6i5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8V7XnOrp59IM1V4Amm1lU6h-hLkCBCQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "17532579542-2ta913rnavip80bd642ps5ig2j64v6i5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

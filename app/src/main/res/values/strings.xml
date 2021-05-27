@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">FireBaseTast</string>
+    <string name="logIn">登入</string>
+    <string name="clear">清除</string>
+    <string name="back">上一頁</string>
+    <string name="newAccount">新建帳號</string>
+    <string name="address">地區</string>
+    <string name="password">密碼</string>
+    <string name="accoutn">帳號</string>
+    <string name="loginSuccess">登入成功</string>
+    <string name="loginFail">登入失敗</string>
+    <string name="welcome">歡迎光臨</string>
+    <string name="logOut">登出</string>
+    <string name="newAccountByEmail">使用信箱新建帳號</string>
+
+
+</resources>
