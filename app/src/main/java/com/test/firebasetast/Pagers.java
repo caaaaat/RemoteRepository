@@ -3,6 +3,8 @@ package com.test.firebasetast;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,23 +45,42 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
-    //    Handler handler;
+
     Map<String,List<cardView>> result = new HashMap();
 
     List<cardView> list_mint = new ArrayList();
     List<cardView> list_maxt = new ArrayList();
     List<cardView> list_wx = new ArrayList();
 
+    View view = null;
+
+    //ui 主線程
+    private Handler mhandler = new Handler(){
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            switch(msg.what){
+                case 1:
+                    //天氣 recyclerView 畫面
+                    setCardViewDataAndRecyclerView();
+            }
+        }
+    };
+
     public Pagers(Context context, int pageNumber) {//pageNumber是由ＭainActivity.java那邊傳入頁碼
         super(context);
 
         //頁面須在此顯示
+        //使用 View.post 方式代入ui線程 or 使用handler代入主畫面都可以
 
-        View view = null;
+//        View view = null;
         LayoutInflater inflater = LayoutInflater.from(context);
         if(pageNumber == 1 ){
             //天氣 recyclerView 畫面
+
             view = inflater.inflate(R.layout.weather_recyclerview, null);//連接頁面
+            sendGET();
+
         }else if(pageNumber ==2 ){
 //
 //            RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
@@ -93,12 +114,13 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
 //                .connectTimeout()
                 .build();
+
         /**設置傳送需求*/
-        Request request = new Request.Builder()
-                .url("https://jsonplaceholder.typicode.com/posts/1")
+//        Request request = new Request.Builder()
+//                .url("https://jsonplaceholder.typicode.com/posts/1")
 //                .header("Cookie","")//有Cookie需求的話則可用此發送
 //                .addHeader("","")//如果API有需要header的則可使用此發送
-                .build();
+//                .build();
 
         Request request1 = new Request.Builder()
                 .url(jsonData)
@@ -106,6 +128,8 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
         /**設置回傳*/
         Call call = client.newCall(request1);
+        //與 onRespone現程不同 >> 一個是主現程 一個是副現程
+//        Log.d(TAG, "sendGET:  目前線程 " + Thread.currentThread().getId() );
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -118,7 +142,8 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                 /**取得回傳*/
 //                tvRes.setText("GET回傳：\n" + response.body().string());
                 String TAG = "onResponse";
-                Log.d(TAG, "onResponse: " + "test start");
+                Log.d(TAG, "onResponse: " + "test start"  );
+//                Log.d(TAG, "onResponse:  目前線程 " + Thread.currentThread().getId() );
                 try {
 
                     JSONObject test = new JSONObject(response.body().string());
@@ -182,6 +207,17 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
 //                        }
 //                    });
 
+                    Message message = new Message();
+                    message.what = 1;
+                    mhandler.sendMessage(message);
+
+//                    view.post(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            setCardViewDataAndRecyclerView();
+//                        }
+//                    });
+
 
 
                 } catch (JSONException e) {
@@ -228,10 +264,10 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
     public void setCardViewDataAndRecyclerView(){
         String TAG = "RecyclerView";
 
-//        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this,RecyclerView.VERTICAL,false));
-//        recyclerAdapter recyclerAdapter = new recyclerAdapter(this);
-//        recyclerView.setAdapter(recyclerAdapter);
+        RecyclerView recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
+        recyclerAdapter recyclerAdapter = new recyclerAdapter(getContext());
+        recyclerView.setAdapter(recyclerAdapter);
 
 //        int userAddressLocate = addressList.indexOf(new cardView(memberData.getAddress()));
 //        Log.d(TAG, "test1:  memberData.getAddress() " + memberData.getAddress());
@@ -269,6 +305,7 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
         @Override
         public recyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(context).inflate(R.layout.cardview,parent,false);
+
             ViewHolder viewHolder = new ViewHolder(view);
             return viewHolder;
         }
@@ -295,7 +332,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                 return 0;
             }
         }
-
     }
 
 }

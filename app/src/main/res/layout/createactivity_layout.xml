@@ -29,9 +29,22 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:id="@+id/account"
+                android:digits="1234567890abcdefghijklmnopqrstuvwxyz"
                 />
 
-
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/password"
+                />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:id="@+id/password"
+                android:inputType="textPassword"
+                android:digits="1234567890abcdefghijklmnopqrstuvwxyz"
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -80,14 +93,7 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/create_newAccountByEmail"
-            android:text="@string/newAccountByEmail"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            />
+
 
     </LinearLayout>
 

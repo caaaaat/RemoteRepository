@@ -29,13 +29,13 @@ android {
     }
 
     //一定要由最後新增的資料夾寫到 res 層，否則 xml 檔案會出現「Element androidx.constraintlayout.widget.ConstraintLayout must be declared」
-    sourceSets {
-        main {
-            res.srcDirs = ['src/main/res/layout/viewPager',
-                           'src/main/res/layout',
-                           'src/main/res' ]
-        }
-    }
+//    sourceSets {
+//        main {
+//            res.srcDirs = ['src/main/res/layout/viewPager',
+//                           'src/main/res/layout',
+//                           'src/main/res' ]
+//        }
+//    }
 }
 
 dependencies {

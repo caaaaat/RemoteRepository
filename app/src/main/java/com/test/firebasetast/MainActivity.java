@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
     //初始化
     public void init(){
         account = findViewById(R.id.account);
-        password = findViewById(R.id.createEmail);
+        password = findViewById(R.id.password);
         logIn = findViewById(R.id.logIn);
         clear = findViewById(R.id.clear);
         newAccount = findViewById(R.id.newAccount);

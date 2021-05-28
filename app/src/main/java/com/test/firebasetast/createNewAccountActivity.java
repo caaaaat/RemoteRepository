@@ -21,7 +21,7 @@ public class createNewAccountActivity extends AppCompatActivity {
     Spinner address;
     EditText addressSearch;
     EditText account,password;
-    Button create_newAccount,create_back,create_newAccountByEmail;
+    Button create_newAccount,create_back;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,12 +39,12 @@ public class createNewAccountActivity extends AppCompatActivity {
 
     public void init(){
         account = findViewById(R.id.account);
-        password = findViewById(R.id.createEmail);
+        password = findViewById(R.id.password);
         address = findViewById(R.id.address);
 //        addressSearch = findViewById(R.id.addressSearch);
         create_newAccount = findViewById(R.id.create_newAccount);
         create_back = findViewById(R.id.create_back);
-        create_newAccountByEmail = findViewById(R.id.create_newAccountByEmail);
+
 
     }
 
@@ -63,7 +63,7 @@ public class createNewAccountActivity extends AppCompatActivity {
             startActivityForResult(intent,3);
         });
 
-        create_newAccountByEmail.setOnClickListener(createnewAccountByEmail);
+
     }
 
     public View.OnClickListener createAccount = new View.OnClickListener() {
@@ -93,17 +93,7 @@ public class createNewAccountActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener createnewAccountByEmail = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            Intent intent = new Intent();
-            intent.setClass(createNewAccountActivity.this,createNewAccountActivity.class);
-            Bundle bundle = new Bundle();
 
-            intent.putExtras(bundle);
-            startActivityForResult(intent,2);
-        }
-    };
 
     //設定 下拉選單 選項
     public void setSpinnerData(){
