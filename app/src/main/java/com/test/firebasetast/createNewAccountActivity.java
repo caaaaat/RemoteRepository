@@ -89,6 +89,7 @@ public class createNewAccountActivity extends AppCompatActivity {
             String account_put =account.getText().toString();
             String password_put = password.getText().toString();
             String address_put = (String)address.getSelectedItem();
+            String subAddress_put = (String)subAddress.getSelectedItem();
 
             FirebaseDatabase fbd = FirebaseDatabase.getInstance();
             DatabaseReference db = fbd.getReference();
@@ -97,10 +98,12 @@ public class createNewAccountActivity extends AppCompatActivity {
             db.child("users").child(account_put).child("userId").setValue(account_put);
             db.child("users").child(account_put).child("password").setValue(password_put);
             db.child("users").child(account_put).child("address").setValue(address_put);
+            db.child("users").child(account_put).child("subAddress").setValue(subAddress_put);
             Log.d(TAG,"FirebaseDataBase set Value end ");
 
             Toast.makeText(getApplicationContext(),"createAccount sussess",Toast.LENGTH_SHORT).show();
-//            Toast.makeText(getApplicationContext(),"accountVlaue = "+ accountValue +  " password Value = " +passwordValue ,Toast.LENGTH_SHORT).show();
+//            Log.d(TAG, "onClick: "+ "accountVlaue = "+ account_put +  " password Value = " +password_put +
+//                    "address_put + subAddress_put " + address_put + "  " + subAddress_put);
 
             account.setText("");
             password.setText("");
