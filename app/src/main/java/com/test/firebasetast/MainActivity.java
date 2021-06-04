@@ -2,9 +2,11 @@ package com.test.firebasetast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     EditText account,password;
     Button logIn,clear,newAccount;
+//    Toolbar toolbar;
 
 //    public static final int SIGN_IN_REQUEST = 1;
 
@@ -40,14 +43,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         context = MainActivity.this;
 
-        //氣象資料開放平台 授權碼
+
         //CWB-1804447F-FDE6-44B0-9CE8-FCDA0022B460
 
+
+
         init();
+        //設置toolbar
+        setToolBar();
         setListen();
 
 
     }
+
 
 
     //初始化
@@ -58,10 +66,35 @@ public class MainActivity extends AppCompatActivity {
         clear = findViewById(R.id.clear);
         newAccount = findViewById(R.id.newAccount);
 //        logInByEmail = findViewById(R.id.logIn_email);
-
+//        toolbar = findViewById(R.id.toolbar);
 
         //先設定好 >> 之後使用 setText + show(); 即可設定完成
         toast.makeText(context,"",Toast.LENGTH_SHORT);
+    }
+
+    private void setToolBar(){
+
+        getSupportActionBar().setTitle("weatherForecast");
+
+//        /**將Toolbar綁定到setSupportActionBar*/
+//        setSupportActionBar(toolbar);
+//        /**設置大標題*/
+//        getSupportActionBar().setTitle("主標題");
+//        /**設置大標題字體顏色*/
+//        toolbar.setTitleTextColor(Color.WHITE);
+//        /**設置副標題*/
+//        toolbar.setSubtitle("副標題");
+//        /**設置副標題字體顏色*/
+//        toolbar.setSubtitleTextColor(Color.WHITE);
+//        /**設置標題前方的Icon圖樣*/
+////        toolbar.setNavigationIcon(getDrawable(R.drawable.ic_baseline_arrow_back_ios_24));
+//        /**設置前方Icon與Title之距離為0(預設的很遠...)*/
+//        toolbar.setContentInsetStartWithNavigation(0);
+//
+//        /**設置Icon圖樣的點擊事件*/
+//        toolbar.setNavigationOnClickListener(v->{
+//            Toast.makeText(this, "結束", Toast.LENGTH_SHORT).show();
+//        });
     }
 
     //設定監聽器
@@ -145,6 +178,9 @@ public class MainActivity extends AppCompatActivity {
                     intent.setClass(MainActivity.this,weatherActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("account",accountValue);
+
+                    account.setText("");
+                    password.setText("");
 
                     intent.putExtras(bundle);
                     startActivityForResult(intent,2);

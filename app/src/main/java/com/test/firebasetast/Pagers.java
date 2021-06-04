@@ -1,8 +1,6 @@
 package com.test.firebasetast;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -10,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,14 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
-import com.test.firebasetast.areaTemp.cardView;
-import com.test.firebasetast.areaTemp.memberData;
+import com.test.firebasetast.areaTemp.weatherData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -46,11 +39,11 @@ import okhttp3.logging.HttpLoggingInterceptor;
 public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
 
-    Map<String,List<cardView>> result = new HashMap();
+    Map<String,List<weatherData>> result = new HashMap();
 
-    List<cardView> list_mint = new ArrayList();
-    List<cardView> list_maxt = new ArrayList();
-    List<cardView> list_wx = new ArrayList();
+    List<weatherData> list_mint = new ArrayList();
+    List<weatherData> list_maxt = new ArrayList();
+    List<weatherData> list_wx = new ArrayList();
 
     View view = null;
 
@@ -63,36 +56,30 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                 case 1:
                     //天氣 recyclerView 畫面
                     setCardViewDataAndRecyclerView();
+                case 2 :
             }
         }
     };
 
+    //頁面須在此顯示
     public Pagers(Context context, int pageNumber) {//pageNumber是由ＭainActivity.java那邊傳入頁碼
         super(context);
 
-        //頁面須在此顯示
-        //使用 View.post 方式代入ui線程 or 使用handler代入主畫面都可以
 
+        //使用 View.post 方式代入ui線程 or 使用handler代入主畫面都可以
 //        View view = null;
         LayoutInflater inflater = LayoutInflater.from(context);
-        if(pageNumber == 1 ){
+        if(pageNumber == 1 ) {
+            //一周天氣
+            view = inflater.inflate(R.layout.weekly_weather_recyclerview, null);//連接頁面
+            getJsonData getJsonData = new getJsonData();
+            getJsonData.sendGET("頭城鎮",mhandler,view);
+
+        }else if(pageNumber == 2 ){
             //天氣 recyclerView 畫面
-
-            view = inflater.inflate(R.layout.weather_recyclerview, null);//連接頁面
             sendGET();
-
-        }else if(pageNumber ==2 ){
-//
-//            RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-//            recyclerView.setLayoutManager(new LinearLayoutManager(context,RecyclerView.VERTICAL,false));
-//            recyclerAdapter recyclerAdapter = new recyclerAdapter(context);
-//            recyclerView.setAdapter(recyclerAdapter);
-
-            view = inflater.inflate(R.layout.my_pagers, null);//連接頁面
-            TextView textView = view.findViewById(R.id.textView);//取得頁面元件
-            textView.setText("第"+pageNumber+"頁");
+            view = inflater.inflate(R.layout.weather_recyclerview, null);//連接頁面
         }else {
-
             view = inflater.inflate(R.layout.my_pagers, null);//連接頁面
             TextView textView = view.findViewById(R.id.textView);//取得頁面元件
             textView.setText("第"+pageNumber+"頁");
@@ -101,6 +88,8 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
         addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
     }
+
+
 
 
     public void sendGET(){
@@ -112,15 +101,7 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
         /**建立連線*/
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
-//                .connectTimeout()
                 .build();
-
-        /**設置傳送需求*/
-//        Request request = new Request.Builder()
-//                .url("https://jsonplaceholder.typicode.com/posts/1")
-//                .header("Cookie","")//有Cookie需求的話則可用此發送
-//                .addHeader("","")//如果API有需要header的則可使用此發送
-//                .build();
 
         Request request1 = new Request.Builder()
                 .url(jsonData)
@@ -142,7 +123,7 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                 /**取得回傳*/
 //                tvRes.setText("GET回傳：\n" + response.body().string());
                 String TAG = "onResponse";
-                Log.d(TAG, "onResponse: " + "test start"  );
+                Log.d(TAG, "onResponse: respones sussess "  );
 //                Log.d(TAG, "onResponse:  目前線程 " + Thread.currentThread().getId() );
                 try {
 
@@ -174,13 +155,13 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
                             switch(elementName){
                                 case "MinT":
-                                    list_mint.add(new cardView(locationName,"MinT",parameterName));
+                                    list_mint.add(new weatherData(locationName,"MinT",parameterName));
 //                                    Log.d(TAG, "onResponse: MinT ");
                                 case "MaxT":
-                                    list_maxt.add(new cardView(locationName,"MaxT",parameterName));
+                                    list_maxt.add(new weatherData(locationName,"MaxT",parameterName));
 //                                    Log.d(TAG, "onResponse: MaxT ");
                                 case "Wx":
-                                    list_wx.add(new cardView(locationName,"Wx",parameterName,parameterValue));
+                                    list_wx.add(new weatherData(locationName,"Wx",parameterName,parameterValue));
 //                                    Log.d(TAG, "onResponse: Wx ");
                             }
 
@@ -192,13 +173,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                     result.put("MinT",list_mint);
                     result.put("MaxT",list_maxt);
                     result.put("Wx",list_wx);
-
-                    for(cardView test11 :list_mint){
-                        Log.d(TAG, "onResponse: weatherData " + test11.getElementName());
-                        Log.d(TAG, "onResponse: weatherData " + test11.getLocationName());
-                        Log.d(TAG, "onResponse: weatherData " + test11.getParameterName());
-                    }
-
 
 //                    runOnUiThread(new Runnable() {
 //                        @Override
@@ -229,36 +203,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
     }
 
-    //抓使用者資料回傳
-//    public memberData getUserData(){
-//        String TAG = "getUserData";
-//        memberData memberData = new memberData();
-//        Intent intent = this.getIntent();
-//        Bundle bundle = intent.getExtras();
-//        String accountValue = bundle.getString("account");
-//        memberData.setAccount(accountValue);
-//
-//        //找地區出來
-//        FirebaseDatabase fbd = FirebaseDatabase.getInstance();
-//        DatabaseReference db = fbd.getReference();
-//        db.child("users").child(accountValue).addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                memberData userData= snapshot.getValue(memberData.class);
-//                Log.d(TAG, "onDataChange: userData.getAddress() " + userData.getAddress());
-//                memberData.setAddress(userData.getAddress());
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//                Log.d(TAG, "userData is null");
-//            }
-//        });
-//
-//
-//        return memberData;
-//    }
-
 
     //recyclerView 設定
     public void setCardViewDataAndRecyclerView(){
@@ -268,11 +212,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
         recyclerAdapter recyclerAdapter = new recyclerAdapter(getContext());
         recyclerView.setAdapter(recyclerAdapter);
-
-//        int userAddressLocate = addressList.indexOf(new cardView(memberData.getAddress()));
-//        Log.d(TAG, "test1:  memberData.getAddress() " + memberData.getAddress());
-//        Log.d(TAG, "test2: userAddressLocate " + userAddressLocate);
-//        recyclerView.scrollToPosition(userAddressLocate);
     }
 
     public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHolder>{
@@ -313,9 +252,9 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
         //設定 recyclerView 內容
         @Override
         public void onBindViewHolder(@NonNull recyclerAdapter.ViewHolder holder, int position) {
-            List<cardView> listMinT =  result.get("MinT");
-            List<cardView> listMaxT = result.get("MaxT");
-            List<cardView> listWx = result.get("Wx");
+            List<weatherData> listMinT =  result.get("MinT");
+            List<weatherData> listMaxT = result.get("MaxT");
+            List<weatherData> listWx = result.get("Wx");
 
 
             holder.address.setText(listMinT.get(position).getLocationName());
@@ -333,5 +272,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
             }
         }
     }
+
 
 }

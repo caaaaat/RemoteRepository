@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.test.firebasetast"
-        minSdkVersion 20
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -26,6 +26,11 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    //unitTest 遇上下列文題更改的方式 "Method ... not mocked."
+    testOptions {
+        unitTests.returnDefaultValues = true
     }
 
     //一定要由最後新增的資料夾寫到 res 層，否則 xml 檔案會出現「Element androidx.constraintlayout.widget.ConstraintLayout must be declared」

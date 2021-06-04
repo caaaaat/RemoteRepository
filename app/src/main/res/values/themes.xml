@@ -15,4 +15,27 @@
     </style>
 
 
+        <!-- Base application theme. -->
+        <!--  把actionbar 取消掉，然後替換成Androidx控件的Toolbar-->
+        <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+            <!-- Customize your theme here. -->
+            <item name="colorPrimary">@color/purple_200</item>
+            <item name="colorPrimaryDark">@color/purple_500</item>
+            <item name="colorAccent">@color/white</item>
+        </style>
+        <!--        設定Toolbar內字體大小-->
+        <style name="TitleTextSize" parent="@style/Base.TextAppearance.AppCompat.Title">
+            <item name="android:textSize">18sp</item>
+        </style>
+        <!--        管理Menu點擊後彈跳出來的的視窗樣式-->
+        <style name="ToolbarPopupTheme" parent="@style/ThemeOverlay.AppCompat.Light">
+<!--            彈出來的視窗背景顏色-->
+            <item name="android:colorBackground">#FFF</item>
+            <item name="actionOverflowMenuStyle">@style/OverflowMenuStyle</item>
+        </style>
+        <style name="OverflowMenuStyle" parent="Widget.AppCompat.Light.PopupMenu.Overflow">
+            <item name="overlapAnchor">false</item>  <!--讓跳出的選項視窗不會遮住Toolbar-->
+        </style>
+
+
 </resources>

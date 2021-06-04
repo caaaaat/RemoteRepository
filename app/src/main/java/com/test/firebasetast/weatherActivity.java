@@ -9,12 +9,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
-import com.test.firebasetast.areaTemp.cardView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class weatherActivity extends AppCompatActivity {
 
@@ -24,11 +20,11 @@ public class weatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weatheractivity_layout);
         String TAG = "oncreate";
-
+        getSupportActionBar().setTitle("weatherForecast");
 
         //設定分頁
         ArrayList<View> mPages = new ArrayList<>();
-        for (int i=0;i<5;i++) {//新增5個分頁
+        for (int i=0;i<2;i++) {//新增5個分頁
             mPages.add(new Pagers(getApplicationContext(), (i + 1)));
         }
 
