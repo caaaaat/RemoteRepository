@@ -130,15 +130,20 @@ public class ExampleUnitTest {
 //        System.out.println("time " + test);
 
 
-        List list = new ArrayList();
-        for(int i = 0;i<7;i++){
-            Calendar calender = Calendar.getInstance();
-            calender.add(Calendar.DAY_OF_WEEK,i);
-            SimpleDateFormat formate = new SimpleDateFormat("E");
-            String weekDay = formate.format(calender.getTime());
-            System.out.println("time " + weekDay.replace("星期",""));
-            list.add(weekDay.replace("星期",""));
-        }
+//        List list = new ArrayList();
+//        for(int i = 0;i<7;i++){
+//            Calendar calender = Calendar.getInstance();
+//            calender.add(Calendar.DAY_OF_WEEK,i);
+//            SimpleDateFormat formate = new SimpleDateFormat("E");
+//            String weekDay = formate.format(calender.getTime());
+//            System.out.println("time " + weekDay.replace("星期",""));
+//            list.add(weekDay.replace("星期",""));
+//        }
+
+        Calendar calender = Calendar.getInstance();
+//        calender.add(Calendar.DAY_OF_WEEK,0);
+        int test = calender.get(Calendar.HOUR_OF_DAY);
+        System.out.println("time " + test);
     }
 
 //    @After

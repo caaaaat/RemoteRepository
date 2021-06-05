@@ -1,8 +1,6 @@
 package com.test.firebasetast;
 
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +16,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import okhttp3.Call;
@@ -51,10 +50,8 @@ public class getJsonData {
     }
 
 
-    public void  sendGET(String location, Handler mhandler,View view){
+    public void  sendGET(String location,View view){
         this.loaction = location;
-//        this.mhandler = mhandler;
-
         String TAG = "sendGET";
         //json資料
         String jsonData = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-003?Authorization=CWB-1804447F-FDE6-44B0-9CE8-FCDA0022B460&format=JSON&locationName="
@@ -116,6 +113,7 @@ public class getJsonData {
                             maxTemp = view.findViewById(R.id.maxTemp);
                             minTemp = view.findViewById(R.id.minTemp);
                             weekDay = view.findViewById(R.id.weekDay);
+                            weatherImage = view.findViewById(R.id.weatherImage);
 
                             weatherSituation = view.findViewById(R.id.weatherSituation);
                             rainfallChance = view.findViewById(R.id.rainfallChance);
@@ -126,6 +124,22 @@ public class getJsonData {
                             weatherSituation.setText((String)result.getWeatherDescription().get("description"));
                             rainfallChance.setText((String)result.getWeatherDescription().get("rainfallChance"));
 
+                            Calendar calender = Calendar.getInstance();
+                            int hourNow = calender.get(Calendar.HOUR_OF_DAY);
+                            String weather = weatherSituation.getText().toString();
+
+
+                            if(weather.contains("雷")){
+                                weatherImage.setImageResource(R.mipmap.cloudlightning);
+                            }else if (weather.contains("雨")){
+                                weatherImage.setImageResource(R.mipmap.heavyrain);
+                            }else if (weather.contains("雲")){
+                                weatherImage.setImageResource(R.mipmap.cloud);
+                            }else if (hourNow <18){
+                                weatherImage.setImageResource(R.mipmap.sun);
+                            }else if (hourNow >17){
+                                weatherImage.setImageResource(R.mipmap.moon);
+                            }
                         }
                     });
 

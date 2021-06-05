@@ -5,12 +5,32 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <Spinner
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/weatherImage"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.611"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/subAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/weatherImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.276"
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
     <ImageView
         android:id="@+id/weatherImage"
         android:layout_width="wrap_content"
         android:layout_height="122dp"
-        android:layout_marginTop="152dp"
+        android:layout_marginTop="80dp"
         android:adjustViewBounds="true"
         android:maxWidth="200dp"
         android:maxHeight="200dp"
@@ -24,7 +44,7 @@
         android:id="@+id/weatherSituation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="@+id/weatherImage"
         app:layout_constraintStart_toStartOf="@+id/weatherImage"
@@ -34,7 +54,7 @@
         android:id="@+id/rainfallChance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="@+id/weatherSituation"
         app:layout_constraintStart_toStartOf="@+id/weatherSituation"
@@ -70,7 +90,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginBottom="76dp"
+        android:layout_marginBottom="30dp"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

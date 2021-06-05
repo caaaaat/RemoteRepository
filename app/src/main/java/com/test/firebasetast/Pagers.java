@@ -73,7 +73,7 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
             //一周天氣
             view = inflater.inflate(R.layout.weekly_weather_recyclerview, null);//連接頁面
             getJsonData getJsonData = new getJsonData();
-            getJsonData.sendGET("頭城鎮",mhandler,view);
+            getJsonData.sendGET("頭城鎮",view);
 
         }else if(pageNumber == 2 ){
             //天氣 recyclerView 畫面

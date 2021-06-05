@@ -40,6 +40,7 @@ public class weatherData {
             minTempTextView = "";
             maxTempTextView = "";
             weekDay ="";
+            weatherDescription = new HashMap<>();
 
             //最低氣溫
             JSONArray mintArray = elementArray.get("MinT");
