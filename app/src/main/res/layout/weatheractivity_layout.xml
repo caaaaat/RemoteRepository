@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@mipmap/tablewallper"
     >
 
 
@@ -12,6 +13,7 @@
         android:id="@+id/tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#00000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -19,7 +21,8 @@
 
         app:tabGravity="fill"
         app:tabMode="auto"
-        />
+
+    />
     <!--    auto
             fixed >> 固定在畫面第一頁
             scrollable >> 捲動模式 -->

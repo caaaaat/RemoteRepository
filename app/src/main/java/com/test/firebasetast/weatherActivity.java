@@ -1,6 +1,8 @@
 package com.test.firebasetast;
 
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +24,9 @@ public class weatherActivity extends AppCompatActivity {
         setContentView(R.layout.weatheractivity_layout);
         String TAG = "oncreate";
         getSupportActionBar().setTitle("weatherForecast");
+//        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#0000ffff"));
+//        getSupportActionBar().setBackgroundDrawable(colorDrawable);
+
 
         //mainActivity送來的資料
         Bundle bundle = getIntent().getExtras();

@@ -101,7 +101,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
         //json資料
         String jsonData = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-C0032-001?Authorization=CWB-1804447F-FDE6-44B0-9CE8-FCDA0022B460&format=JSON";
 
-
         /**建立連線*/
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
@@ -169,8 +168,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                 }
             }
         });
-
-
     }
 
 
@@ -258,6 +255,4 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
             }
         }
     }
-
-
 }
