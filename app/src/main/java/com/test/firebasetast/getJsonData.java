@@ -1,12 +1,26 @@
 package com.test.firebasetast;
 
-import android.os.Handler;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.database.annotations.NotNull;
+import com.test.firebasetast.areaTemp.common;
 import com.test.firebasetast.areaTemp.weatherData;
 
 import org.json.JSONArray;
@@ -15,7 +29,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Array;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 
@@ -28,19 +45,16 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class getJsonData {
 
-    private String loaction;
-    private Handler mhandler;
+//    private String loaction;
+//    private String address;
+//    private  String jsonData;
 
-//    public void sendGET(String location, Handler mhandler){
-//        this.loaction = location;
-//        this.mhandler = mhandler;
-//    }
 
     public String locationURLDecode(String location){
         String result = "";
         try{
             String TAG = "locationURLDecode";
-            result = URLDecoder.decode(location,"utf-8");
+            result = URLEncoder.encode(location,"utf-8");
             Log.e(TAG, "locationURLDecode: string  " + location);
             Log.e(TAG, "locationURLDecode: after decode " + result);
         }catch (UnsupportedEncodingException e){
@@ -50,14 +64,78 @@ public class getJsonData {
     }
 
 
-    public void  sendGET(String location,View view){
-        this.loaction = location;
+    public void  sendGET(View view, Bundle bundle){
+        String account = bundle.getString("account");
+        String address = bundle.getString("address");
+        String subaddress = bundle.getString("subaddress");
+        common common = new common();
         String TAG = "sendGET";
         //json資料
-        String jsonData = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-003?Authorization=CWB-1804447F-FDE6-44B0-9CE8-FCDA0022B460&format=JSON&locationName="
-                + locationURLDecode(loaction);
+        String jsonData = "https://opendata.cwb.gov.tw/api/v1/rest/datastore/F-D0047-" +
+                common.areaNumber().get(address) +
+                "?Authorization=CWB-1804447F-FDE6-44B0-9CE8-FCDA0022B460&format=JSON&locationName="
+                + locationURLDecode(subaddress);
+        Log.e(TAG, "sendGET: subaddress "+ subaddress + "jsonData "  + jsonData );
 
-        /**建立連線*/
+
+        FirebaseDatabase fbd = FirebaseDatabase.getInstance();
+        DatabaseReference db = fbd.getReference();
+        db.child("location").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                Spinner addressSpinner = view.findViewById(R.id.address);
+                Spinner subAddressSpinner = view.findViewById(R.id.subAddress);
+                if(task.isSuccessful()){
+                    Log.d(TAG, "onComplete: is successful");
+                    HashMap<String, ArrayList> sublocation = (HashMap) task.getResult().getValue();
+
+                    //主下拉選單
+                    ArrayList<String> location = new ArrayList<>();
+                    for(String sublocationKey : sublocation.keySet()){
+                        location.add(sublocationKey);
+                    }
+
+                    view.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            ArrayAdapter arrayAdapter = new ArrayAdapter(view.getContext(),
+                                    android.R.layout.simple_dropdown_item_1line,location);
+
+                            int addressPosition = arrayAdapter.getPosition(address);
+                            addressSpinner.setAdapter(arrayAdapter);
+                            addressSpinner.setSelection(addressPosition);
+
+                            ArrayAdapter arrayAdapter2 = new ArrayAdapter(view.getContext(),
+                                    android.R.layout.simple_dropdown_item_1line,sublocation.get(location.get(0)).toArray());
+                            subAddressSpinner.setAdapter(arrayAdapter2);
+
+
+                            addressSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                                @Override
+                                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                                    int position = addressSpinner.getSelectedItemPosition();
+                                    ArrayAdapter arrayAdapter2 = new ArrayAdapter(view.getContext(),
+                                            android.R.layout.simple_dropdown_item_1line,sublocation.get(location.get(position)).toArray());
+                                    subAddressSpinner.setAdapter(arrayAdapter2);
+                                }
+                                @Override
+                                public void onNothingSelected(AdapterView<?> adapterView) {
+                                    Log.d(TAG, "onNothingSelected: error ");
+                                }
+                            });
+                        }
+                    });
+                }else{
+                    Log.d(TAG,account + " 抓取地區下拉選單錯誤 ");
+                    Toast.makeText(view.getContext(),
+                            account + " address spinner error  ",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+
+
+//        /**建立連線*/
         OkHttpClient client = new OkHttpClient().newBuilder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
                 .build();
@@ -98,11 +176,6 @@ public class getJsonData {
                     hashMap.put(maxTemp,maxTimeArray);
                     hashMap.put(WeatherDescription,descriptionTimeArray);
                     weatherData result = new weatherData(hashMap);
-
-//                    Message message = new Message();
-//                    message.what = 2;
-//                    message.obj = result;
-//                    mhandler.sendMessage(message);
 
                     view.post(new Runnable() {
                         @Override

@@ -1,5 +1,7 @@
 package com.test.firebasetast;
 
+import android.util.Log;
+
 import com.google.firebase.database.annotations.NotNull;
 
 import org.json.JSONException;
@@ -11,6 +13,9 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +44,23 @@ public class ExampleUnitTest {
         @BeforeClass/@AfterClass 都要皆為 static。
     */
     String TAG = "test";
+
+    @Test
+    public void test(){
+            String result = "";
+            try{
+                String TAG = "locationURLDecode";
+                String address = "新竹縣";
+//                result = URLDecoder.(address,"utf-8");
+                result = URLEncoder.encode(address,"utf-8");
+//                Log.e(TAG, "locationURLDecode: string  " + address);
+//                Log.e(TAG, "locationURLDecode: after decode " + result);
+                System.out.println("locationURLDecode: string" + address);
+                System.out.println( "locationURLDecode: after decode " + result);
+            }catch (UnsupportedEncodingException e){
+                e.printStackTrace();
+            }
+    }
 
 //    @BeforeClass
 //    public static void testBeforeClass() throws Exception {
@@ -121,8 +143,8 @@ public class ExampleUnitTest {
 //        });
 //    }
 
-    @Test
-    public void test(){
+//    @Test
+//    public void test(){
 //        long time = System.curretTimeMillis();
 //        Date date = new Date(time);
 //        SimpleDateFormat formate = new SimpleDateFormat("E");
@@ -140,11 +162,11 @@ public class ExampleUnitTest {
 //            list.add(weekDay.replace("星期",""));
 //        }
 
-        Calendar calender = Calendar.getInstance();
-//        calender.add(Calendar.DAY_OF_WEEK,0);
-        int test = calender.get(Calendar.HOUR_OF_DAY);
-        System.out.println("time " + test);
-    }
+//        Calendar calender = Calendar.getInstance();
+////        calender.add(Calendar.DAY_OF_WEEK,0);
+//        int test = calender.get(Calendar.HOUR_OF_DAY);
+//        System.out.println("time " + test);
+//    }
 
 //    @After
 //    public void testAfter() throws Exception {

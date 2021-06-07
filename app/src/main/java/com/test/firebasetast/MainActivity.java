@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         //CWB-1804447F-FDE6-44B0-9CE8-FCDA0022B460
 
-
-
         init();
         //設置toolbar
         setToolBar();
@@ -117,9 +115,8 @@ public class MainActivity extends AppCompatActivity {
 
     public View.OnClickListener logInLinsters = view -> {
         String TAG = "logInLinsters ";
-//                GenericTypeIndicator<Map<String,String>> test =new GenericTypeIndicator<HashMap<String,String>>();
-
         Log.d(TAG,"test1 ");
+
         String accountValue = account.getText().toString();
         String passwordValue = password.getText().toString();
         Toast.makeText(getApplicationContext(),"accountVlaue = "+ accountValue +  " password Value = " +passwordValue ,Toast.LENGTH_SHORT).show();
@@ -128,56 +125,33 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase fbd = FirebaseDatabase.getInstance();
         DatabaseReference db = fbd.getReference();
 
-        //check user account
-//        db.child("users").child(accountValue).child("userId").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<DataSnapshot> task) {
-//                String account_DB = "";
-//                Boolean login_flag = false;
-//                if(task.isSuccessful()){
-////                    task.getResult()
-//                    login_flag = true;
-//                    Log.d(TAG, String.valueOf(task.getResult().getValue()) + " logIn sussess");
-//                    task.getResult(memberData.class);
-//                    task.getResult()
-//                }else{
-//                    Log.e(TAG, "Error getting data", task.getException());
-//                }
-//            }
-//        });
-
+        //目前還沒能檢察密碼是否正確
         db.child("users").addValueEventListener(new ValueEventListener() {
             String TAG = "usersData";
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 Map value =  (Map<String,Object>)snapshot.getValue();
-//                memberData test = snapshot.getValue(memberData.class);
-//                Log.d(TAG,"account is " + test.getAccount());
-//                Log.d(TAG,"account is " + test.getAddress());
-//                Log.d(TAG,"account is " + test.getPassword());
-
 
                 if(value.get(accountValue) == null){
                     Log.d(TAG,"login fail account not exists " );
                     Toast.makeText(getApplicationContext(),
                             "account not exists ",Toast.LENGTH_SHORT).show();
                 }else {
-                    Log.d(TAG,"Value is " + value.get(accountValue));
-
-                    //目前還沒能檢察密碼是否正確
-//                    for(DataSnapshot test:snapshot.getChildren()){
-//                        test.
-//                    }
-
-
                     Toast.makeText(getApplicationContext(),
                             accountValue +" login Sussess ",Toast.LENGTH_SHORT).show();
+
+                    //使用者地址
+                    String address = (String) snapshot.child(accountValue).child("address").getValue();
+                    String subaddress = (String) snapshot.child(accountValue).child("subAddress").getValue();
+
 
                     Intent intent = new Intent();
                     intent.setClass(MainActivity.this,weatherActivity.class);
                     Bundle bundle = new Bundle();
                     bundle.putString("account",accountValue);
+                    bundle.putString("address",address);
+                    bundle.putString("subaddress",subaddress);
 
                     account.setText("");
                     password.setText("");
@@ -197,50 +171,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-//        ValueEventListener dataListener = new ValueEventListener() {
-//            String TAG = "dataListener";
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-////                memberData md= snapshot.getValue(memberData.class);
-////                memberData test= snapshot.getValue(memberData.class);
-////                snapshot.getKey();
-//
-//                 Map<String,Object> map = (Map<String,Object>)snapshot.getValue();
-//
-////                if(accountValue == md.getAccount()) test11 = true;
-//                Log.d(TAG, "onDataChange: " + map.get("account") );
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        };
-//        db.addValueEventListener(dataListener);
-
-
-
-
-
-
-//        db.child("users").child(accountValue).child("userId").setValue(accountValue);
-//        db.child("users").child(accountValue).child("userPassword").setValue(passwordValue);
-////        db.child("users").child(accountValue).child("userName").setValue("userName");
-//
-//        Log.d(TAG, "set Value database ");
-//
-//        Intent intent = new Intent();
-//        intent.setClass(MainActivity.this,weatherActivity.class);
-//        Bundle bundle = new Bundle();
-//        //目前userName寫死
-//        bundle.putString("userName","userName");
-//        bundle.putString("userId",accountValue);
-//        intent.putExtras(bundle);
-//        startActivityForResult(intent,1);
-
     };
 
 
@@ -255,9 +185,6 @@ public class MainActivity extends AppCompatActivity {
 
         intent.putExtras(bundle);
         startActivityForResult(intent,2);
-//        onNewIntent();
-
-//        startActivity(new Intent(MainActivity.this,createNewAccountActivity.class));
 
     };
 

@@ -2,6 +2,7 @@ package com.test.firebasetast;
 
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import androidx.annotation.Nullable;
@@ -22,10 +23,14 @@ public class weatherActivity extends AppCompatActivity {
         String TAG = "oncreate";
         getSupportActionBar().setTitle("weatherForecast");
 
+        //mainActivity送來的資料
+        Bundle bundle = getIntent().getExtras();
+//        String account = bundle.getString("account");
+
         //設定分頁
         ArrayList<View> mPages = new ArrayList<>();
         for (int i=0;i<2;i++) {//新增5個分頁
-            mPages.add(new Pagers(getApplicationContext(), (i + 1)));
+            mPages.add(new Pagers(getApplicationContext(), (i + 1),bundle));
         }
 
         //主要原件

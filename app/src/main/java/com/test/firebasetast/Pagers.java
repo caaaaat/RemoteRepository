@@ -1,6 +1,7 @@
 package com.test.firebasetast;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -62,18 +63,17 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
     };
 
     //頁面須在此顯示
-    public Pagers(Context context, int pageNumber) {//pageNumber是由ＭainActivity.java那邊傳入頁碼
+    public Pagers(Context context, int pageNumber, Bundle bundle) {//pageNumber是由ＭainActivity.java那邊傳入頁碼
         super(context);
 
 
         //使用 View.post 方式代入ui線程 or 使用handler代入主畫面都可以
-//        View view = null;
         LayoutInflater inflater = LayoutInflater.from(context);
         if(pageNumber == 1 ) {
             //一周天氣
             view = inflater.inflate(R.layout.weekly_weather_recyclerview, null);//連接頁面
             getJsonData getJsonData = new getJsonData();
-            getJsonData.sendGET("頭城鎮",view);
+            getJsonData.sendGET(view,bundle);
 
         }else if(pageNumber == 2 ){
             //天氣 recyclerView 畫面

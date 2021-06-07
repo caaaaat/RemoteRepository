@@ -150,7 +150,6 @@ public class createNewAccountActivity extends AppCompatActivity {
                             address.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                 @Override
                                 public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-
                                     int position = address.getSelectedItemPosition();
                                     ArrayAdapter arrayAdapter2 = new ArrayAdapter(getApplicationContext(),
                                             android.R.layout.simple_dropdown_item_1line,sublocation.get(location.get(position)).toArray());
