@@ -12,6 +12,7 @@
     <string name="welcome">歡迎光臨</string>
     <string name="logOut">登出</string>
     <string name="newAccountByEmail">使用信箱新建帳號</string>
+    <string name="selectedAddress">選擇地區</string>
 
 
 </resources>

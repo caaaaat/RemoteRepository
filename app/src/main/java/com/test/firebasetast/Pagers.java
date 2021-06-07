@@ -9,8 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +28,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,11 +77,12 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
             view = inflater.inflate(R.layout.weekly_weather_recyclerview, null);//連接頁面
             getJsonData getJsonData = new getJsonData();
             getJsonData.sendGET(view,bundle);
+//            getJsonData.getItemSelected(view);
 
         }else if(pageNumber == 2 ){
             //天氣 recyclerView 畫面
-            sendGET();
             view = inflater.inflate(R.layout.weather_recyclerview, null);//連接頁面
+            sendGET();
         }else {
             view = inflater.inflate(R.layout.my_pagers, null);//連接頁面
             TextView textView = view.findViewById(R.id.textView);//取得頁面元件
@@ -110,7 +114,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
         /**設置回傳*/
         Call call = client.newCall(request1);
         //與 onRespone現程不同 >> 一個是主現程 一個是副現程
-//        Log.d(TAG, "sendGET:  目前線程 " + Thread.currentThread().getId() );
         call.enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
@@ -120,8 +123,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                /**取得回傳*/
-//                tvRes.setText("GET回傳：\n" + response.body().string());
                 String TAG = "onResponse";
                 Log.d(TAG, "onResponse: respones sussess "  );
 //                Log.d(TAG, "onResponse:  目前線程 " + Thread.currentThread().getId() );
@@ -130,7 +131,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                     JSONObject test = new JSONObject(response.body().string());
                     JSONObject recordsObj = test.getJSONObject("records");
                     JSONArray locationArray = recordsObj.getJSONArray("location");
-                    String parameterValue = "";
 
                     for(int i =0 ;i <locationArray.length(); i++){
                         String locationName = locationArray.getJSONObject(i).getString("locationName");
@@ -139,59 +139,29 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                             String elementName= weatherElement.getJSONObject(j).getString("elementName");
                             JSONArray timeArray = weatherElement.getJSONObject(j).getJSONArray("time");
 
-//                           for(int k = 0;k<timeArray.length();k++){
-                            String parameterName = timeArray.getJSONObject(1)
+                            String parameterName = timeArray.getJSONObject(0)
                                     .getJSONObject("parameter").getString("parameterName");
-                            switch(elementName){
-                                case "Wx":
-                                    parameterValue = timeArray.getJSONObject(1)
-                                            .getJSONObject("parameter").getString("parameterValue");
-                                case "MinT":
-                                    parameterValue ="";
-                                case "MaxT":
-                                    parameterValue = "";
+
+                            if(elementName.equals("Wx")){
+//                                Log.e(TAG, "onResponse: wx locationName " + locationName +" parameterName " + parameterName );
+                                list_wx.add(new weatherData(locationName,"Wx",parameterName));
+                            }else if(elementName.equals("MinT")){
+//                                Log.e(TAG, "onResponse: minT locationName " + locationName +" parameterName " + parameterName );
+                                list_mint.add(new weatherData(locationName,"MinT",parameterName));
+                            }else if(elementName.equals("MaxT")){
+//                                Log.e(TAG, "onResponse: maxT locationName " + locationName +" parameterName " + parameterName );
+                                list_maxt.add(new weatherData(locationName,"MaxT",parameterName));
                             }
-//                           }
-
-                            switch(elementName){
-                                case "MinT":
-                                    list_mint.add(new weatherData(locationName,"MinT",parameterName));
-//                                    Log.d(TAG, "onResponse: MinT ");
-                                case "MaxT":
-                                    list_maxt.add(new weatherData(locationName,"MaxT",parameterName));
-//                                    Log.d(TAG, "onResponse: MaxT ");
-                                case "Wx":
-                                    list_wx.add(new weatherData(locationName,"Wx",parameterName,parameterValue));
-//                                    Log.d(TAG, "onResponse: Wx ");
-                            }
-
-
                         }
                     }
-
 
                     result.put("MinT",list_mint);
                     result.put("MaxT",list_maxt);
                     result.put("Wx",list_wx);
 
-//                    runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            setCardViewDataAndRecyclerView();
-//                        }
-//                    });
-
                     Message message = new Message();
                     message.what = 1;
                     mhandler.sendMessage(message);
-
-//                    view.post(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            setCardViewDataAndRecyclerView();
-//                        }
-//                    });
-
 
 
                 } catch (JSONException e) {
@@ -210,13 +180,14 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
+//        new GridView()
         recyclerAdapter recyclerAdapter = new recyclerAdapter(getContext());
         recyclerView.setAdapter(recyclerAdapter);
     }
 
     public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHolder>{
         private Context context;
-
+        String TAG = "recyclerAdapter";
         //建構子
         recyclerAdapter(Context context){
             this.context = context;
@@ -225,16 +196,15 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
         class ViewHolder extends RecyclerView.ViewHolder{
             TextView address,tempMax,tempMin;
-            Button button1,button2;
+            ImageView weather;
 
             public ViewHolder(@NonNull View itemView) {
                 super(itemView);
                 address = itemView.findViewById(R.id.address_textView);
                 tempMax = itemView.findViewById(R.id.tempMax_textView);
                 tempMin = itemView.findViewById(R.id.tempMin_textView);
+                weather = itemView.findViewById(R.id.weatherImage);
 
-                button1 = itemView.findViewById(R.id.cardView_button1);
-                button2 = itemView.findViewById(R.id.cardView_button2);
 
             }
         }
@@ -258,8 +228,24 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
 
             holder.address.setText(listMinT.get(position).getLocationName());
-            holder.tempMax.setText(listMaxT.get(position).getParameterName()+"C");
-            holder.tempMin.setText(listMinT.get(position).getParameterName()+"C");
+            holder.tempMax.setText(listMaxT.get(position).getParameterName()+"\u00b0 ");
+            holder.tempMin.setText(listMinT.get(position).getParameterName()+"\u00b0 ");
+
+            String Wx= listWx.get(position).getParameterName();
+            Log.e(TAG, "onBindViewHolder: " + Wx +" address " + listMinT.get(position).getLocationName() );
+            Calendar calender = Calendar.getInstance();
+            int hourNow = calender.get(Calendar.HOUR_OF_DAY);
+            if(Wx.contains("雷")){
+                holder.weather.setImageResource(R.mipmap.cloudlightning);
+            }else if (Wx.contains("雨")){
+                holder.weather.setImageResource(R.mipmap.heavyrain);
+            }else if (Wx.contains("雲")){
+                holder.weather.setImageResource(R.mipmap.cloud);
+            }else if (hourNow <18){
+                holder.weather.setImageResource(R.mipmap.sun);
+            }else if (hourNow >17){
+                holder.weather.setImageResource(R.mipmap.moon);
+            }
 
         }
 

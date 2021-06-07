@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<!--<com.google.android.material.card.MaterialCardView-->
-    <androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
+    android:layout_height="100dp"
+    android:padding="6dp"
+    card_view:cardBackgroundColor="#ffdddddd"
+    card_view:cardCornerRadius="28dp"
+    card_view:cardElevation="6dp"
     >
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,9 +21,8 @@
             android:id="@+id/editText"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginBottom="48dp"
-            android:text="最高溫"
+            android:layout_marginStart="56dp"
+            android:text="此刻最低溫"
             android:textColor="@color/design_default_color_error"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent" />
@@ -30,13 +31,12 @@
             android:id="@+id/editText2"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:layout_marginStart="16dp"
-            android:text="最低溫"
+            android:layout_marginStart="56dp"
+            android:text="此刻最高溫"
             android:textColor="@color/design_default_color_error"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.35" />
+            card_view:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tempMin_textView"
@@ -45,21 +45,18 @@
             android:textColor="@color/design_default_color_error"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.284"
+            card_view:layout_constraintHorizontal_bias="0.418"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.603" />
+            card_view:layout_constraintVertical_bias="1.0" />
 
         <TextView
             android:id="@+id/address_textView"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:textAppearance="?attr/textAppearanceHeadline6"
-            android:textColor="@color/cardview_dark_background"
-            android:textSize="25dp"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.321"
+            card_view:layout_constraintHorizontal_bias="0.18"
             card_view:layout_constraintStart_toStartOf="parent"
             card_view:layout_constraintTop_toTopOf="parent" />
 
@@ -70,40 +67,23 @@
             android:textColor="@color/design_default_color_error"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
-            card_view:layout_constraintHorizontal_bias="0.284"
+            card_view:layout_constraintHorizontal_bias="0.418"
             card_view:layout_constraintStart_toStartOf="parent"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.358" />
+            card_view:layout_constraintTop_toTopOf="parent" />
 
-<!--        <com.google.android.material.button.MaterialButton-->
-        <Button
-            android:id="@+id/cardView_button1"
-            style="?attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="100dp"
-            android:text="action1"
-            android:visibility="invisible"
+        <ImageView
+            android:layout_width="96dp"
+            android:layout_height="69dp"
+            android:layout_marginEnd="80dp"
+            android:adjustViewBounds="true"
+            android:src="@mipmap/cloud"
+            android:id="@+id/weatherImage"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
             card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.96" />
+            card_view:layout_constraintVertical_bias="0.484" />
 
-<!--        <com.google.android.material.button.MaterialButton-->
-        <Button
-            android:id="@+id/cardView_button2"
-            style="?attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="76dp"
-            android:text="action2"
-            android:visibility="invisible"
-            card_view:layout_constraintBottom_toBottomOf="parent"
-            card_view:layout_constraintEnd_toStartOf="@+id/cardView_button1"
-            card_view:layout_constraintTop_toTopOf="parent"
-            card_view:layout_constraintVertical_bias="0.96" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>
-<!--</com.google.android.material.card.MaterialCardView>-->

@@ -104,12 +104,6 @@ public class weatherData {
         this.parameterName = parameterName;
     }
 
-    public weatherData(String locationName, String elementName, String parameterName, String parameterValue) {
-        this.locationName = locationName;
-        this.elementName = elementName;
-        this.parameterName = parameterName;
-        this.parameterValue = parameterValue;
-    }
 
 
     public String getParameterValue() {
