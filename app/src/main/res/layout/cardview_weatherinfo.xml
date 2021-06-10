@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="175dp"
+    android:layout_height="175dp"
+    view:cardBackgroundColor="#00000000"
+    view:cardElevation="0dp"
+    >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/textInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:text="test"
+            android:textColor="@color/black"
+            view:layout_constraintStart_toStartOf="parent"
+            view:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/weatherInfo"
+            android:layout_width="113dp"
+            android:layout_height="125dp"
+            android:adjustViewBounds="true"
+            android:maxWidth="175dp"
+            android:maxHeight="175dp"
+            android:src="@mipmap/rainfullrecycler"
+            view:layout_constraintBottom_toBottomOf="parent"
+            view:layout_constraintEnd_toEndOf="parent"
+            view:layout_constraintStart_toStartOf="parent"
+            view:layout_constraintTop_toTopOf="parent"
+            view:layout_constraintVertical_bias="0.7" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

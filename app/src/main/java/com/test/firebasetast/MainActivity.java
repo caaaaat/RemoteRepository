@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     //初始化
     public void init(){
         account = findViewById(R.id.account);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void setToolBar(){
 
-        getSupportActionBar().setTitle("weatherForecast");
+//        getSupportActionBar().setTitle("weatherForecast");
 
 //        /**將Toolbar綁定到setSupportActionBar*/
 //        setSupportActionBar(toolbar);
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
         String accountValue = account.getText().toString();
         String passwordValue = password.getText().toString();
-        Toast.makeText(getApplicationContext(),"accountVlaue = "+ accountValue +  " password Value = " +passwordValue ,Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getApplicationContext(),"accountVlaue = "+ accountValue +  " password Value = " +passwordValue ,Toast.LENGTH_SHORT).show();
 
 
         FirebaseDatabase fbd = FirebaseDatabase.getInstance();
@@ -184,6 +184,7 @@ public class MainActivity extends AppCompatActivity {
         Bundle bundle = new Bundle();
 
         intent.putExtras(bundle);
+        startActivity(intent);
         startActivityForResult(intent,2);
 
     };

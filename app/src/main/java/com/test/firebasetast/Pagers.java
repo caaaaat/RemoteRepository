@@ -79,10 +79,14 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
             getJsonData.sendGET(view,bundle);
 //            getJsonData.getItemSelected(view);
 
-        }else if(pageNumber == 2 ){
+        }else if(pageNumber == 2 ) {
             //天氣 recyclerView 畫面
             view = inflater.inflate(R.layout.weather_recyclerview, null);//連接頁面
             sendGET();
+        }else if(pageNumber == 3 ){
+            view = inflater.inflate(R.layout.weather_info,null);
+            getWeatherInfo getWeatherInfo = new getWeatherInfo();
+            getWeatherInfo.getweatherInfo(view,context);
         }else {
             view = inflater.inflate(R.layout.my_pagers, null);//連接頁面
             TextView textView = view.findViewById(R.id.textView);//取得頁面元件
@@ -177,7 +181,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
 
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),RecyclerView.VERTICAL,false));
-//        new GridView()
         recyclerAdapter recyclerAdapter = new recyclerAdapter(getContext());
         recyclerView.setAdapter(recyclerAdapter);
     }

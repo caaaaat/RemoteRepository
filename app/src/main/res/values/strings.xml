@@ -13,6 +13,8 @@
     <string name="logOut">登出</string>
     <string name="newAccountByEmail">使用信箱新建帳號</string>
     <string name="selectedAddress">選擇地區</string>
+    <string name="tempImage">天氣分布圖</string>
+
 
 
 </resources>

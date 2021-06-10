@@ -23,9 +23,7 @@ public class weatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weatheractivity_layout);
         String TAG = "oncreate";
-        getSupportActionBar().setTitle("weatherForecast");
-//        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#0000ffff"));
-//        getSupportActionBar().setBackgroundDrawable(colorDrawable);
+//        getSupportActionBar().setTitle("weatherForecast");
 
 
         //mainActivity送來的資料
@@ -34,7 +32,7 @@ public class weatherActivity extends AppCompatActivity {
 
         //設定分頁
         ArrayList<View> mPages = new ArrayList<>();
-        for (int i=0;i<2;i++) {//新增5個分頁
+        for (int i=0;i<3;i++) {//新增5個分頁
             mPages.add(new Pagers(getApplicationContext(), (i + 1),bundle));
         }
 

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.test.firebasetast">
 
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -9,7 +10,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FireBaseTast"
+        android:theme="@style/Theme.NoactionBar"
         >
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -21,6 +22,8 @@
         <activity android:name=".createNewAccountActivity"
             android:launchMode="singleTop"/>
         <activity android:name=".weatherActivity"
+            android:launchMode="singleTop"/>
+        <activity android:name=".webViewActivity"
             android:launchMode="singleTop"/>
     </application>
 
