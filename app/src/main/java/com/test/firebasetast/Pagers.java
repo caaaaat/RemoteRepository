@@ -66,7 +66,8 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
     };
 
     //頁面須在此顯示
-    public Pagers(Context context, int pageNumber, Bundle bundle) {//pageNumber是由ＭainActivity.java那邊傳入頁碼
+    //pageNumber是由MainActivity.java那邊傳入頁碼
+    public Pagers(Context context, int pageNumber, Bundle bundle) {
         super(context);
 
 
@@ -84,6 +85,7 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
             view = inflater.inflate(R.layout.weather_recyclerview, null);//連接頁面
             sendGET();
         }else if(pageNumber == 3 ){
+            //中央氣象局圖表
             view = inflater.inflate(R.layout.weather_info,null);
             getWeatherInfo getWeatherInfo = new getWeatherInfo();
             getWeatherInfo.getweatherInfo(view,context);
@@ -93,6 +95,7 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
             textView.setText("第"+pageNumber+"頁");
         }
 
+        //放入View 當中
         addView(view, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
     }
@@ -214,7 +217,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
         @Override
         public recyclerAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(context).inflate(R.layout.cardview,parent,false);
-
             ViewHolder viewHolder = new ViewHolder(view);
             return viewHolder;
         }
@@ -225,7 +227,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
             List<weatherData> listMinT =  result.get("MinT");
             List<weatherData> listMaxT = result.get("MaxT");
             List<weatherData> listWx = result.get("Wx");
-
 
             holder.address.setText(listMinT.get(position).getLocationName());
             holder.tempMax.setText(listMaxT.get(position).getParameterName()+"\u00b0 ");

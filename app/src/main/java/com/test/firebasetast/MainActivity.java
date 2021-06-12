@@ -48,8 +48,6 @@ public class MainActivity extends AppCompatActivity {
         //CWB-1804447F-FDE6-44B0-9CE8-FCDA0022B460
 
         init();
-        //設置toolbar
-        setToolBar();
         setListen();
 
 
@@ -63,36 +61,9 @@ public class MainActivity extends AppCompatActivity {
         logIn = findViewById(R.id.logIn);
         clear = findViewById(R.id.clear);
         newAccount = findViewById(R.id.newAccount);
-//        logInByEmail = findViewById(R.id.logIn_email);
-//        toolbar = findViewById(R.id.toolbar);
 
         //先設定好 >> 之後使用 setText + show(); 即可設定完成
         toast.makeText(context,"",Toast.LENGTH_SHORT);
-    }
-
-    private void setToolBar(){
-
-//        getSupportActionBar().setTitle("weatherForecast");
-
-//        /**將Toolbar綁定到setSupportActionBar*/
-//        setSupportActionBar(toolbar);
-//        /**設置大標題*/
-//        getSupportActionBar().setTitle("主標題");
-//        /**設置大標題字體顏色*/
-//        toolbar.setTitleTextColor(Color.WHITE);
-//        /**設置副標題*/
-//        toolbar.setSubtitle("副標題");
-//        /**設置副標題字體顏色*/
-//        toolbar.setSubtitleTextColor(Color.WHITE);
-//        /**設置標題前方的Icon圖樣*/
-////        toolbar.setNavigationIcon(getDrawable(R.drawable.ic_baseline_arrow_back_ios_24));
-//        /**設置前方Icon與Title之距離為0(預設的很遠...)*/
-//        toolbar.setContentInsetStartWithNavigation(0);
-//
-//        /**設置Icon圖樣的點擊事件*/
-//        toolbar.setNavigationOnClickListener(v->{
-//            Toast.makeText(this, "結束", Toast.LENGTH_SHORT).show();
-//        });
     }
 
     //設定監聽器
@@ -100,7 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
         //登入
         logIn.setOnClickListener(logInLinsters);
-//        logInByEmail.setOnClickListener();
         //清除
         clear.setOnClickListener(view -> {
             account.setText("");
@@ -118,13 +88,9 @@ public class MainActivity extends AppCompatActivity {
         Log.d(TAG,"test1 ");
 
         String accountValue = account.getText().toString();
-        String passwordValue = password.getText().toString();
-//        Toast.makeText(getApplicationContext(),"accountVlaue = "+ accountValue +  " password Value = " +passwordValue ,Toast.LENGTH_SHORT).show();
-
 
         FirebaseDatabase fbd = FirebaseDatabase.getInstance();
         DatabaseReference db = fbd.getReference();
-
         //目前還沒能檢察密碼是否正確
         db.child("users").addValueEventListener(new ValueEventListener() {
             String TAG = "usersData";
@@ -172,9 +138,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     };
-
-
-
 
     //創帳號
     private View.OnClickListener createNewAccount = view -> {

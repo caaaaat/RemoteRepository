@@ -23,12 +23,9 @@ public class weatherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.weatheractivity_layout);
         String TAG = "oncreate";
-//        getSupportActionBar().setTitle("weatherForecast");
-
 
         //mainActivity送來的資料
         Bundle bundle = getIntent().getExtras();
-//        String account = bundle.getString("account");
 
         //設定分頁
         ArrayList<View> mPages = new ArrayList<>();
@@ -46,7 +43,6 @@ public class weatherActivity extends AppCompatActivity {
         tab.setupWithViewPager(viewPager);//將TabLayout綁定給ViewPager
         viewPager.setAdapter(myPagerAdapter);//綁定適配器
         viewPager.setCurrentItem(0);//指定跳到某頁，一定得設置在setAdapter後面
-
 
     }
 

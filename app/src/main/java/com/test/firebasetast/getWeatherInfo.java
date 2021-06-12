@@ -27,7 +27,6 @@ public class getWeatherInfo {
 
         recyclerAdapter recyclerAdapter = new recyclerAdapter(context);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView);
-//        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2);
         recyclerView.setLayoutManager(new GridLayoutManager(context,2));
         recyclerView.setAdapter(recyclerAdapter);
 
@@ -36,7 +35,7 @@ public class getWeatherInfo {
     public class recyclerAdapter extends RecyclerView.Adapter<recyclerAdapter.ViewHolder>{
         private Context context;
         String TAG = "recyclerAdapter";
-        //建構子
+
         recyclerAdapter(Context context){
             this.context = context;
         }
@@ -71,7 +70,6 @@ public class getWeatherInfo {
         @Override
         public int getItemCount() {
             try{
-                //length 等等是從1開始算起
                 return 5;
             }catch (NullPointerException e){
                 return 0;
@@ -85,12 +83,11 @@ public class getWeatherInfo {
         Intent intent=new Intent();
         String textInfo = null;
         int imageResource = 0;
-//        position是從0開始算起
+
         switch(position){
             case 0:
                 textInfo = "溫度分部圖";
                 imageResource = R.mipmap.temprecycler;
-                url="https://www.cwb.gov.tw/V8/C/W/OBS_Temp.html";
                 url="https://www.cwb.gov.tw/V8/C/W/OBS_Temp.html";
                 intent.putExtra("url",url);
                 break;
@@ -140,6 +137,7 @@ public class getWeatherInfo {
         public DownloadImageTask(ImageView bmImage) {
             this.bmImage = bmImage;
         }
+
 
         protected Bitmap doInBackground(String... urls) {
             String urldisplay = urls[0];

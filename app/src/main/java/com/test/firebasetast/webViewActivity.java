@@ -24,7 +24,7 @@ public class webViewActivity extends AppCompatActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                
+
                 //返回值是true的時候控制網頁在WebView中去開啟，如果為false呼叫系統瀏覽器或第三方瀏覽器去開啟
                 view.loadUrl(url);
                 return true;
