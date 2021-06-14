@@ -35,7 +35,6 @@ public class webViewActivity extends AppCompatActivity {
         //啟用支援JavaScript
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
-        //WebView載入頁面優先使用快取載入
-        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
+        settings.setCacheMode(WebSettings.LOAD_NO_CACHE);
     }
 }
