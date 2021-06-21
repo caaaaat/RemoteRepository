@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
 
         //CWB-1804447F-FDE6-44B0-9CE8-FCDA0022B460
 
+
         init();
         setListen();
 
@@ -91,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
 
         FirebaseDatabase fbd = FirebaseDatabase.getInstance();
         DatabaseReference db = fbd.getReference();
-        //目前還沒能檢察密碼是否正確
+
         db.child("users").addValueEventListener(new ValueEventListener() {
             String TAG = "usersData";
             @Override

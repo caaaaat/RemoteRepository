@@ -102,12 +102,9 @@ public class createNewAccountActivity extends AppCompatActivity {
             Log.d(TAG,"FirebaseDataBase set Value end ");
 
             Toast.makeText(getApplicationContext(),"createAccount sussess",Toast.LENGTH_SHORT).show();
-//            Log.d(TAG, "onClick: "+ "accountVlaue = "+ account_put +  " password Value = " +password_put +
-//                    "address_put + subAddress_put " + address_put + "  " + subAddress_put);
 
             account.setText("");
             password.setText("");
-//            address.setAdapter();
 
         }
     };

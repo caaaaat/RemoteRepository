@@ -117,7 +117,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
                 .url(jsonData)
                 .build();
 
-        /**設置回傳*/
         Call call = client.newCall(request1);
         //與 onRespone現程不同 >> 一個是主現程 一個是副現程
         call.enqueue(new Callback() {
@@ -131,7 +130,6 @@ public class Pagers extends LinearLayout {//繼承別的Layout亦可
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 String TAG = "onResponse";
                 Log.d(TAG, "onResponse: respones sussess "  );
-//                Log.d(TAG, "onResponse:  目前線程 " + Thread.currentThread().getId() );
                 try {
 
                     JSONObject test = new JSONObject(response.body().string());

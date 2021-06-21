@@ -137,7 +137,6 @@ public class getJsonData {
 
 
 
-                            //        /**建立連線*/
                             OkHttpClient client = new OkHttpClient().newBuilder()
                                     .addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BASIC))
                                     .build();
@@ -165,7 +164,6 @@ public class getJsonData {
                                         JSONObject test = new JSONObject(response.body().string());
 
                                         JSONObject location = test.getJSONObject("records").getJSONArray("locations").getJSONObject(0).getJSONArray("location").getJSONObject(0);
-                                        //elementName + timeArray(MinT MaxT WeatherDescription)
                                         String minTemp = location.getJSONArray("weatherElement").getJSONObject(8).getString("elementName");
                                         JSONArray minTimeArray = location.getJSONArray("weatherElement").getJSONObject(8).getJSONArray("time");
                                         String maxTemp = location.getJSONArray("weatherElement").getJSONObject(12).getString("elementName");
